@@ -2,7 +2,9 @@ package org.au.requisitor.common.dependencies;
 
 import java.io.Serializable;
 
-import org.au.requisitor.common.requirements.Requirement;
+import org.au.requisitor.common.ChildNode;
+import org.au.requisitor.common.ChildType;
+import org.au.requisitor.common.ParentNode;
 
 /**
  * Represents a dependency.
@@ -12,14 +14,17 @@ import org.au.requisitor.common.requirements.Requirement;
  * @author James Whelan, Neil Hoskins
  *
  */
-public abstract class Dependency implements Serializable {
+public abstract class Dependency implements Serializable, ChildNode {
 
 	private static final long serialVersionUID = 3774784501638109805L;
 
-	private Requirement parent;
-	private DependencyType type;
+	private ParentNode parent;
 	
-	public DependencyType getType() {
-		return type;
+	public abstract ChildType getType();
+
+	public ParentNode getParent() {
+		return parent;
 	}
+	
+	
 }

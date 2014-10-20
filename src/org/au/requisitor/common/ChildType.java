@@ -1,4 +1,4 @@
-package org.au.requisitor.common.dependencies;
+package org.au.requisitor.common;
 
 import java.io.Serializable;
 
@@ -8,13 +8,17 @@ import java.io.Serializable;
  * @author James Whelan, Neil Hoskins
  *
  */
-public enum DependencyType implements Serializable {
-	DEV("D"), TEST("T");
+public enum ChildType implements Serializable {
+	REQ("R"), DEV("D"), TEST("T");
 	
 	private String type;
 	
-	DependencyType(String type) {
+	ChildType(String type) {
 		this.type = type;
+	}
+	
+	public boolean isRequirement() {
+		return "R".equals(type);
 	}
 	
 	public boolean isDevelopment() {

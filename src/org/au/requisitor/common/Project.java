@@ -20,8 +20,7 @@ public class Project implements ParentNode {
 
 	private String name;
 	
-	// TODO we should create a 'Version' class
-	private String version;
+	private Version version;
 	
 	// TODO when we implement ORM, this is a reference to the owning Company
 	private Company company;
