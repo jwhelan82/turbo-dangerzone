@@ -30,7 +30,7 @@ public class Requirement implements ParentNode, ChildNode {
 	private static final long serialVersionUID = 1068855009582972250L;
 	
 	private String name;
-	private Version version;	// TODO we should create a 'Version' class
+	private Version version;	
 	private String description;
 	private RequirementStatus status;
 	private ParentNode parent;
@@ -43,6 +43,54 @@ public class Requirement implements ParentNode, ChildNode {
 	@Override
 	public ChildType getType() {
 		return ChildType.REQ;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Version getVersion() {
+		return version;
+	}
+
+	public void setVersion(Version version) {
+		this.version = version;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public RequirementStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(RequirementStatus status) {
+		this.status = status;
+	}
+
+	public ParentNode getParent() {
+		return parent;
+	}
+
+	public void setParent(ParentNode parent) {
+		this.parent = parent;
+	}
+
+	public Collection<ChildNode> getChildNodes() {
+		return childNodes;
+	}
+
+	public void setChildNodes(Collection<ChildNode> childNodes) {
+		this.childNodes = childNodes;
 	}
 
 	public Collection<Requirement> getChildRequirements() {
