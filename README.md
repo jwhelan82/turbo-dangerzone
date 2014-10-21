@@ -3,10 +3,13 @@ turbo-dangerzone
 
 Requirements tracking tool
 
-Proposed tech:
-
 Platform:
 Java 7 
+
+Build:
+Maven 3.0.3
+
+Proposed tech:
 
 Database
 MongoDB - http://www.mongodb.org/
