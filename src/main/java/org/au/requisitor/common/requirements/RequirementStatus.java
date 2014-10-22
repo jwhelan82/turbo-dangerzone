@@ -6,6 +6,8 @@ package org.au.requisitor.common.requirements;
  * @author James Whelan, Neil Hoskins
  *
  */
+//TODO this should be consolidated into a generic Status class that 
+// can be used by other types
 public enum RequirementStatus {
 	
 	INVALID("I"), COMPLETE("C"), VERIFIED("V");
