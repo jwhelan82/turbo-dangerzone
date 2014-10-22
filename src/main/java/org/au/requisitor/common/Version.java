@@ -6,6 +6,8 @@ import java.text.ParseException;
 /**
  * Represents a version.
  * 
+ * Versions are immutable; incrementing a Version will create a new Version.
+ * 
  * @author Neil Hoskins, James Whelan
  *
  */
@@ -32,7 +34,19 @@ public final class Version implements Serializable, Comparable<Version> {
 	public Version(String vString) throws ParseException {
 		fromString(vString);
 	}
+	
+	public Version incrementMajor() {
+		return new Version(majorNumber+1, 0,0);
+	}
 
+	public Version incrementMinor() {
+		return new Version(majorNumber, minorNumber+1, 0);
+	}
+	
+	public Version incrementBuild() {
+		return new Version(majorNumber, minorNumber, buildNumber+1);
+	}
+	
 	private void fromString(String vString) throws ParseException {
 		if (vString != null) {
 			String[] parts = vString.split("\\.");

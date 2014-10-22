@@ -45,4 +45,62 @@ public class VersionTest extends TestCase {
 		
 	}
 	
+	public void testIncrementMajor() {
+		Version v1 = new Version(1,0,0);
+		Version v2 = v1.incrementMajor();
+		
+		assertEquals("2.0.0", v2.toString());
+	}
+	
+	public void testIncrementMinor() {
+		Version v1 = new Version(1,0,0);
+		Version v2 = v1.incrementMinor();
+		
+		assertEquals("1.1.0", v2.toString());
+		
+	}
+	
+	public void testIncrementBuild() {
+		Version v1 = new Version(1,0,0);
+		Version v2 = v1.incrementBuild();
+		
+		assertEquals("1.0.1", v2.toString());
+	}
+	
+	public void testLessThan() {
+		
+		Version v1 = new Version(1,0,0);
+		Version v2 = v1.incrementMajor();
+		assertEquals(true, v1.isLessThan(v2));
+		
+		Version v3 = new Version(1,0,0);
+		Version v4 = v3.incrementMinor();
+		assertEquals(true, v3.isLessThan(v4));
+		
+		Version v5 = new Version(1,0,0);
+		Version v6 = v5.incrementBuild();
+		assertEquals(true, v5.isLessThan(v6));
+	}
+	
+	public void testGreaterThan() {
+		
+		Version v1 = new Version(1,0,0);
+		Version v2 = v1.incrementMajor();
+		assertEquals(true, v2.isGreaterThan(v1));
+		
+		Version v3 = new Version(1,0,0);
+		Version v4 = v3.incrementMinor();
+		assertEquals(true, v4.isGreaterThan(v3));
+		
+		Version v5 = new Version(1,0,0);
+		Version v6 = v5.incrementBuild();
+		assertEquals(true, v6.isGreaterThan(v5));
+	}
+	
+	public void testEqualTo() {
+		
+		Version v1 = new Version(1,0,0);
+		Version v2 = new Version(1,0,0);
+		assertTrue(v1.isEqualTo(v2));
+	}
 }
