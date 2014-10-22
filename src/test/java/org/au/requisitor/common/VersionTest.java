@@ -4,6 +4,11 @@ import java.text.ParseException;
 
 import junit.framework.TestCase;
 
+/**
+ * 
+ * @author Neil Hoskins
+ *
+ */
 public class VersionTest extends TestCase {
 
 	public void testCompare() {

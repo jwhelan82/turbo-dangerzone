@@ -3,6 +3,12 @@ package org.au.requisitor.common;
 import java.io.Serializable;
 import java.text.ParseException;
 
+/**
+ * Represents a version.
+ * 
+ * @author Neil Hoskins, James Whelan
+ *
+ */
 public final class Version implements Serializable, Comparable<Version> {
 
 	private static final long serialVersionUID = -421809733995321827L;
@@ -53,5 +59,18 @@ public final class Version implements Serializable, Comparable<Version> {
 			}
 		}
 		return comp == 0? 0 : comp > 0? 1 : -1;
+	}
+	
+	// mmm, convenience
+	public boolean isEqualTo(Version v) {
+		return compareTo(v) == 0;
+	}
+	
+	public boolean isLessThan(Version v) {
+		return compareTo(v) < 0;
+	}
+	
+	public boolean isGreaterThan(Version v) {
+		return compareTo(v) > 0;
 	}
 }
