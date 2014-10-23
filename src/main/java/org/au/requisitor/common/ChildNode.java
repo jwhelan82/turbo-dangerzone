@@ -1,6 +1,6 @@
 package org.au.requisitor.common;
 
-public interface ChildNode {
+public interface ChildNode extends Node {
 
 	ChildType getType();
 

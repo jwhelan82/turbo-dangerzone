@@ -1,6 +1,5 @@
 package org.au.requisitor.common;
 
-import java.io.Serializable;
 
 /**
  * Interface that can be used to define a parent node  
@@ -8,6 +7,6 @@ import java.io.Serializable;
  * @author James Whelan, Neil Hoskins
  *
  */
-public interface ParentNode extends Serializable {
+public interface ParentNode extends Node {
 
 }

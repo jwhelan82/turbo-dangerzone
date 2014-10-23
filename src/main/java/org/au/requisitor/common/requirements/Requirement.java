@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.au.requisitor.common.ChildNode;
 import org.au.requisitor.common.ChildType;
 import org.au.requisitor.common.ParentNode;
+import org.au.requisitor.common.Status;
 import org.au.requisitor.common.Version;
 import org.au.requisitor.common.dependencies.Development;
 import org.au.requisitor.common.dependencies.Test;
@@ -32,12 +33,12 @@ public class Requirement implements ParentNode, ChildNode {
 	private String name;
 	private Version version;	
 	private String description;
-	private RequirementStatus status;
+	private Status status;
 	private ParentNode parent;
 	private Collection<ChildNode> childNodes;
 	
 	public Requirement() {
-		status = RequirementStatus.INVALID;
+		status = Status.Planned;
 	}
 	
 	@Override
@@ -69,11 +70,11 @@ public class Requirement implements ParentNode, ChildNode {
 		this.description = description;
 	}
 
-	public RequirementStatus getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(RequirementStatus status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
