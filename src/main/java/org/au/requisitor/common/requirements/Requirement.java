@@ -2,10 +2,13 @@ package org.au.requisitor.common.requirements;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
 
 import org.au.requisitor.common.ChildNode;
 import org.au.requisitor.common.ChildType;
 import org.au.requisitor.common.ParentNode;
+import org.au.requisitor.common.Project;
 import org.au.requisitor.common.Status;
 import org.au.requisitor.common.Version;
 import org.au.requisitor.common.dependencies.Development;
@@ -34,11 +37,13 @@ public class Requirement implements ParentNode, ChildNode {
 	private Version version;	
 	private String description;
 	private Status status;
+	private Project project;
 	private ParentNode parent;
 	private Collection<ChildNode> childNodes;
 	
 	public Requirement() {
 		status = Status.Planned;
+		childNodes = new LinkedList<>();
 	}
 	
 	@Override
@@ -86,6 +91,11 @@ public class Requirement implements ParentNode, ChildNode {
 		this.parent = parent;
 	}
 
+	public void addDependency(ChildNode node) {
+		this.childNodes.add(node);
+		node.addParent(this);
+	}
+	
 	public Collection<ChildNode> getChildNodes() {
 		return childNodes;
 	}
@@ -122,5 +132,18 @@ public class Requirement implements ParentNode, ChildNode {
 			}
 		}
 		return td;
+	}
+
+	@Override
+	public Collection<ParentNode> getParentNodes() {
+		if (parent == null) {
+			return Collections.EMPTY_LIST;
+		}
+		return Collections.singletonList(parent);
+	}
+
+	@Override
+	public void addParent(ParentNode parent) {
+		this.parent = parent;
 	}
 }

@@ -87,4 +87,8 @@ public final class Version implements Serializable, Comparable<Version> {
 	public boolean isGreaterThan(Version v) {
 		return compareTo(v) > 0;
 	}
+	
+	public boolean isGreaterOrEqualTo(Version v) {
+		return compareTo(v) >= 0;
+	}
 }

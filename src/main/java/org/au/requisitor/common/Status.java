@@ -9,22 +9,22 @@ package org.au.requisitor.common;
 //TODO this should be consolidated into a generic Status class that 
 // can be used by other types
 public enum Status {
-	
 
+	// priority: NeedsUpdate > InProgress > CompleteNV > CompleteRV > CompleteV > others
+	NeedsUpdating("NU", 10),
+	InProgress("I", 9),
+	CompleteNV("CNV", 8),
+	CompleteRV("CRV", 7),
+	CompleteV("CV", 6),
+	UpToDate("UTD", 5),
+	
 	Planned("PL"),
 	WaitingForRequirements("WFR"),
-	NeedsUpdating("NU"),
 	Updating("U"),
-	Incomplete("I"),
-	CompleteNV("CNV"),
-	CompleteV("CV"),
-	CompleteRV("CRV"),
 
 	NeedsDevelopment("NDEV"),
 	UnderDevelopment("UDEV"),
 	ReadyForBuild("RFB"),
-	UpToDate("UTD"),
-
 
 	WaitingForDevelopment("WFD"),
 	ReadyForTesting("RFT"),
@@ -34,22 +34,21 @@ public enum Status {
 
 	;
 
+	private final String status;
+	private final int priority;
 	
 	Status(String status) {
 		this.status = status;
+		this.priority = 0;
 	}
 	
-	private String status;
-	
-	public boolean isInvalid() {
-		return "I".equals(status);
+	Status(String status, int priority) {
+		this.status = status;
+		this.priority = priority;
 	}
 	
-	public boolean isComplete() {
-		return "C".equals(status);
-	}
-	
-	public boolean isVerified() {
-		return "V".equals(status);
+
+	public Status getPrioritisedStatus(Status newStatus) {
+		return (newStatus.priority > priority)? newStatus : this;
 	}
 }

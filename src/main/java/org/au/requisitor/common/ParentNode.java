@@ -1,5 +1,7 @@
 package org.au.requisitor.common;
 
+import java.util.Collection;
+
 
 /**
  * Interface that can be used to define a parent node  
@@ -8,5 +10,5 @@ package org.au.requisitor.common;
  *
  */
 public interface ParentNode extends Node {
-
+	public Collection<ChildNode> getChildNodes();
 }

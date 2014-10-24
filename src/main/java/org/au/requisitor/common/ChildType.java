@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  */
 public enum ChildType implements Serializable {
-	REQ("R"), DEV("D"), TEST("T");
+	REQ("R"), DEV("D"), TEST("T"), TESTRUN("TR");
 	
 	private String type;
 	
@@ -27,5 +27,9 @@ public enum ChildType implements Serializable {
 	
 	public boolean isTest() {
 		return "T".equals(type);
+	}
+	
+	public boolean isTestRun() {
+		return "TR".equals(type);
 	}
 }

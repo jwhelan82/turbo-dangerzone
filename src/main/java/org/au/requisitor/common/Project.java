@@ -14,7 +14,7 @@ import org.au.requisitor.common.requirements.Requirement;
  * @author James Whelan, Neil Hoskins
  *
  */
-public class Project implements ParentNode {
+public class Project {
 
 	private static final long serialVersionUID = -3949764880583964494L;
 
@@ -58,6 +58,4 @@ public class Project implements ParentNode {
 	public void setRequirements(Collection<Requirement> requirements) {
 		this.requirements = requirements;
 	}
-	
-	
 }

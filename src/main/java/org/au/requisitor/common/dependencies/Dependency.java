@@ -1,10 +1,13 @@
 package org.au.requisitor.common.dependencies;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.LinkedList;
 
 import org.au.requisitor.common.ChildNode;
 import org.au.requisitor.common.ChildType;
 import org.au.requisitor.common.ParentNode;
+import org.au.requisitor.common.Version;
 
 /**
  * Represents a dependency.
@@ -18,13 +21,26 @@ public abstract class Dependency implements Serializable, ChildNode {
 
 	private static final long serialVersionUID = 3774784501638109805L;
 
-	private ParentNode parent;
+	Version version;
+	private Collection<ParentNode> parents = new LinkedList<>();
 	
 	public abstract ChildType getType();
 
-	public ParentNode getParent() {
-		return parent;
+	@Override
+	public void addParent(ParentNode parent) {
+		parents.add(parent);
 	}
-	
-	
+
+	@Override
+	public Collection<ParentNode> getParentNodes() {
+		return parents;
+	}
+
+	public Version getVersion() {
+		return version;
+	}
+
+	public void setVersion(Version version) {
+		this.version = version;
+	}
 }
