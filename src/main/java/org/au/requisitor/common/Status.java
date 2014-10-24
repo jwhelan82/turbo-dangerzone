@@ -11,15 +11,15 @@ package org.au.requisitor.common;
 public enum Status {
 
 	// priority: NeedsUpdate > InProgress > CompleteNV > CompleteRV > CompleteV > others
-	NeedsUpdating("NU", 10),
-	InProgress("I", 9),
-	CompleteNV("CNV", 8),
-	CompleteRV("CRV", 7),
-	CompleteV("CV", 6),
-	UpToDate("UTD", 5),
+	WaitingForParent("WFP", 11), // a parent is being updated
+	NeedsUpdating("NU", 10), // there is a higher parent version
+	InProgress("I", 9), // there is a lower child version
+	CompleteV("CV", 8),  // there is at least one test run at the current project version
+	CompleteRV("CRV", 7), // there a test run but less than the current project version 
+	CompleteNV("CNV", 6), // there is no test run >= current version 
+	UpToDate("UTD", 5), // all children are less than the current version
 	
 	Planned("PL"),
-	WaitingForRequirements("WFR"),
 	Updating("U"),
 
 	NeedsDevelopment("NDEV"),
@@ -31,7 +31,8 @@ public enum Status {
 	Testing("TEST"),
 	VerifiedToDate("VER"),
 	FailedTesting("FAIL"),
-
+	
+	Obsolete("Ob") // test run is for a past version of a requirement
 	;
 
 	private final String status;

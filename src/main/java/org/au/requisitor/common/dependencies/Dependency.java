@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import org.au.requisitor.common.ChildNode;
 import org.au.requisitor.common.ChildType;
 import org.au.requisitor.common.ParentNode;
+import org.au.requisitor.common.Status;
 import org.au.requisitor.common.Version;
 
 /**
@@ -21,6 +22,7 @@ public abstract class Dependency implements Serializable, ChildNode {
 
 	private static final long serialVersionUID = 3774784501638109805L;
 
+	Status status;
 	Version version;
 	private Collection<ParentNode> parents = new LinkedList<>();
 	
@@ -42,5 +44,14 @@ public abstract class Dependency implements Serializable, ChildNode {
 
 	public void setVersion(Version version) {
 		this.version = version;
+	}
+	
+	@Override
+	public Status getStatus() {
+		return status;
+	}
+	
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 }

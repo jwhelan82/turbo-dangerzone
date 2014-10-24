@@ -11,4 +11,5 @@ import java.util.Collection;
  */
 public interface ParentNode extends Node {
 	public Collection<ChildNode> getChildNodes();
+	public void addDependency(ChildNode node);
 }
