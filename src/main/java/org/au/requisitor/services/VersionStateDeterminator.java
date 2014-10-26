@@ -61,27 +61,28 @@ public class VersionStateDeterminator {
 		return state;
 	}
 	
-	private static void checkChildVersions(Collection<ChildNode> children, Version version, Version pVersion, VersionStates vStates) {
+	private static void checkChildVersions(Collection<ChildNode> children, Version nodeVersion, 
+			Version projectVersion, VersionStates vStates) {
 		for (ChildNode child : children) {			
 			if (child instanceof TestRun) {
 				// there are some valid test runs 
 				// TODO check all tests have test cases
-				if (child.getVersion().isGreaterOrEqualTo(version)) {
+				if (child.getVersion().isGreaterOrEqualTo(nodeVersion)) {
 					vStates.hasValidTests = true;
 				}
 				
 				// the test runs are later than the current parent, but less than the project
-				if (child.getVersion().isGreaterOrEqualTo(version) && child.getVersion().isLessThan(pVersion)) {
+				if (child.getVersion().isGreaterOrEqualTo(nodeVersion) && child.getVersion().isLessThan(projectVersion)) {
 					vStates.testsRegressed = true;
 				}
 				
 			// check if any other node is out of date
-			} else if (version.isGreaterThan(child.getVersion())) {
+			} else if (nodeVersion.isGreaterThan(child.getVersion())) {
 				vStates.childOutOfDate = true;
 			}
 			
 			if (child instanceof ParentNode) {
-				checkChildVersions(((ParentNode) child).getChildNodes(), version, pVersion, vStates);
+				checkChildVersions(((ParentNode) child).getChildNodes(), nodeVersion, projectVersion, vStates);
 			}
 		}
 	}

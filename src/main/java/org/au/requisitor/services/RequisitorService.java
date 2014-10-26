@@ -14,20 +14,20 @@ import org.au.requisitor.common.VersionLevel;
 import org.au.requisitor.common.action.Action;
 import org.au.requisitor.common.action.ActionType;
 import org.au.requisitor.common.requirements.Requirement;
-import org.au.requisitor.common.search.SeachCritera;
+import org.au.requisitor.common.search.SearchCriteria;
 
 public interface RequisitorService {
 
     // create stuff
     void createCompany(Company c);
     void createProject(Project p);
-    void createRequirement(Requirement req);
+    void createRequirement(Requirement req); 
     void createDependency(ParentNode parent, ChildNode dep);    
 
     // get stuff
     Company getCompanyById(NodeId id);
     Collection<Project> getProjectsForCompany(Company c);
-    List<Node> search(SeachCritera s);
+    List<Node> search(SearchCriteria s);
         
     // do stuff    
     List<ActionType> getValidActions(Node nodeId);

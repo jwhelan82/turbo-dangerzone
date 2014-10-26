@@ -14,7 +14,7 @@ import org.au.requisitor.common.VersionLevel;
 import org.au.requisitor.common.action.Action;
 import org.au.requisitor.common.action.ActionType;
 import org.au.requisitor.common.requirements.Requirement;
-import org.au.requisitor.common.search.SeachCritera;
+import org.au.requisitor.common.search.SearchCriteria;
 
 public class RequisitorServiceAdapter implements RequisitorService {
 
@@ -55,7 +55,7 @@ public class RequisitorServiceAdapter implements RequisitorService {
 	}
 
 	@Override
-	public List<Node> search(SeachCritera s) {
+	public List<Node> search(SearchCriteria s) {
 		// TODO Auto-generated method stub
 		return null;
 	}

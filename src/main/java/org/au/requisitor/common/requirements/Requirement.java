@@ -22,7 +22,7 @@ import org.au.requisitor.common.dependencies.Test;
  * 
  * Requirements must have a parent which is a project or a requirement.
  * 
- * Initially, all requirements have a status of invalid.
+ * Initially, all requirements have a status of Planned.
  * 
  * A Requirement is only valid when all children of a Requirement are Dependencies or other valid Requirements. 
  * 
