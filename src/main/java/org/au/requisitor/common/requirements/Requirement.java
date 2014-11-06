@@ -7,10 +7,12 @@ import java.util.LinkedList;
 
 import org.au.requisitor.common.ChildNode;
 import org.au.requisitor.common.ChildType;
+import org.au.requisitor.common.Dependency;
 import org.au.requisitor.common.ParentNode;
 import org.au.requisitor.common.Project;
 import org.au.requisitor.common.Status;
 import org.au.requisitor.common.Version;
+import org.au.requisitor.common.VersionStates;
 import org.au.requisitor.common.dependencies.Development;
 import org.au.requisitor.common.dependencies.Test;
 
@@ -29,7 +31,7 @@ import org.au.requisitor.common.dependencies.Test;
  * @author James Whelan, Neil Hoskins
  *
  */
-public class Requirement implements ParentNode, ChildNode {
+public class Requirement extends Dependency implements ParentNode {
 
 	private static final long serialVersionUID = 1068855009582972250L;
 	
@@ -145,5 +147,23 @@ public class Requirement implements ParentNode, ChildNode {
 	@Override
 	public void addParent(ParentNode parent) {
 		this.parent = parent;
+	}
+
+	@Override
+	public Status getVersionState(Version projectVersion) {
+		return super.getVersionState(projectVersion);
+	}
+
+	@Override
+	public void checkVersionState(Version version, Version pVersion,
+			VersionStates vStates) {
+		
+		if (version.isGreaterThan(getVersion())) {
+			vStates.childOutOfDate = true;
+		}
+
+		for (ChildNode child : getChildNodes()) {
+			child.checkVersionState(version, pVersion, vStates);
+		}
 	}
 }

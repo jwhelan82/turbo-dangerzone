@@ -6,7 +6,10 @@ import java.util.LinkedList;
 
 import org.au.requisitor.common.ChildNode;
 import org.au.requisitor.common.ChildType;
+import org.au.requisitor.common.Dependency;
 import org.au.requisitor.common.ParentNode;
+import org.au.requisitor.common.Version;
+import org.au.requisitor.common.VersionStates;
 
 /**
  * 
@@ -34,4 +37,17 @@ public class Test extends Dependency implements Serializable, ParentNode {
 		children.add(node);
 		node.addParent(this);
 	}
+	
+	@Override
+	public void checkVersionState(Version version, Version pVersion, VersionStates vStates) {
+		
+		if (version.isGreaterThan(getVersion())) {
+			vStates.childOutOfDate = true;
+		}
+
+		for (ChildNode child : getChildNodes()) {
+			child.checkVersionState(version, pVersion, vStates);
+		}
+	}
+
 }
