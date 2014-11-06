@@ -1,9 +1,13 @@
 package org.au.requisitor.common.dependencies;
 
+import org.au.requisitor.common.ChildNode;
 import org.au.requisitor.common.ChildType;
 import org.au.requisitor.common.Dependency;
+import org.au.requisitor.common.ParentNode;
+import org.au.requisitor.common.Status;
 import org.au.requisitor.common.Version;
 import org.au.requisitor.common.VersionStates;
+import org.au.requisitor.common.requirements.Requirement;
 
 public class TestRun extends Dependency {
 
@@ -30,4 +34,19 @@ public class TestRun extends Dependency {
 			vStates.testsRegressed = true;
 		}			
 	}
+	
+	@Override
+	public Status getVersionState(Version projectVersion) {
+		Status state = checkParentVersions();
+
+		// test runs don't get updated with different versions, they do however become out of date
+		if (state == Status.NeedsUpdating) {
+			state = Status.Obsolete;
+		} else if (isValidUpdatingState(state)) {
+			state = Status.Updating;
+		} 
+		
+		return state;
+	}
+
 }

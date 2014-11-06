@@ -6,8 +6,10 @@ import org.au.requisitor.common.ChildNode;
 import org.au.requisitor.common.ChildType;
 import org.au.requisitor.common.Dependency;
 import org.au.requisitor.common.ParentNode;
+import org.au.requisitor.common.Status;
 import org.au.requisitor.common.Version;
 import org.au.requisitor.common.VersionStates;
+import org.au.requisitor.common.requirements.Requirement;
 
 /**
  * 
@@ -31,5 +33,15 @@ public class Development extends Dependency implements Serializable {
 		}
 	}
 
+	@Override
+	public Status getVersionState(Version projectVersion) {
+		Status state = checkParentVersions();
+
+		if (isValidUpdatingState(state)) {
+			state = Status.Updating;
+		}
+
+		return state;
+	}
 
 }

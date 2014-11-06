@@ -8,8 +8,10 @@ import org.au.requisitor.common.ChildNode;
 import org.au.requisitor.common.ChildType;
 import org.au.requisitor.common.Dependency;
 import org.au.requisitor.common.ParentNode;
+import org.au.requisitor.common.Status;
 import org.au.requisitor.common.Version;
 import org.au.requisitor.common.VersionStates;
+import org.au.requisitor.common.requirements.Requirement;
 
 /**
  * 
@@ -48,6 +50,27 @@ public class Test extends Dependency implements Serializable, ParentNode {
 		for (ChildNode child : getChildNodes()) {
 			child.checkVersionState(version, pVersion, vStates);
 		}
+	}
+
+	@Override
+	public Status getVersionState(Version projectVersion) {
+		Status state = checkParentVersions();
+
+		if (isValidUpdatingState(state)) {
+			state = Status.Updating;
+			
+		} else if (state == Status.UpToDate) {
+
+			// determine the state of children
+			VersionStates vStates = VersionStates.getChildVersionStates(this, projectVersion);
+			
+			// out of date if there are children out of date
+			if (vStates.childOutOfDate) {
+				state = Status.InProgress;
+			}
+		}
+
+		return state;
 	}
 
 }

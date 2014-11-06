@@ -15,6 +15,7 @@ import org.au.requisitor.common.Version;
 import org.au.requisitor.common.VersionStates;
 import org.au.requisitor.common.dependencies.Development;
 import org.au.requisitor.common.dependencies.Test;
+import org.au.requisitor.common.dependencies.TestRun;
 
 
 /**
@@ -150,11 +151,6 @@ public class Requirement extends Dependency implements ParentNode {
 	}
 
 	@Override
-	public Status getVersionState(Version projectVersion) {
-		return super.getVersionState(projectVersion);
-	}
-
-	@Override
 	public void checkVersionState(Version version, Version pVersion,
 			VersionStates vStates) {
 		
@@ -166,4 +162,45 @@ public class Requirement extends Dependency implements ParentNode {
 			child.checkVersionState(version, pVersion, vStates);
 		}
 	}
+	
+	@Override
+	public Status getVersionState(Version projectVersion) {
+		Status state = checkParentVersions();
+
+			// nodes that are updating are allowed to continue unless a parent
+			// is updating
+			// the other option here is that the parent is waiting, which means
+			// we wait as well
+		if (isValidUpdatingState(state)) {
+			state = Status.Updating;
+
+			// the parent state is ok, check children
+		} else if (state == Status.UpToDate) {
+
+			// determine the state of children
+			VersionStates vStates = VersionStates.getChildVersionStates(this, projectVersion);
+			
+			// out of date if there are children out of date
+			if (vStates.childOutOfDate) {
+				state = Status.InProgress;
+
+				// requirements have the completed status
+			} else {
+				if (vStates.zombieNode) {
+					state = Status.Planned;
+				} else if (vStates.hasValidTests) {
+					if (vStates.testsRegressed) {
+						state = Status.CompleteRV;
+					} else {
+						state = Status.CompleteV;
+					}
+				} else {
+					state = Status.CompleteNV;
+				}
+			}
+		}
+
+		return state;
+	}
+
 }

@@ -51,56 +51,12 @@ public abstract class Dependency implements Serializable, ChildNode {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-
-	@Override
-	public Status getVersionState(Version projectVersion) {
-		Status state = checkParentVersions();
-
-		// test runs don't get updated, they do however become out of date
-		if (this instanceof TestRun && state == Status.NeedsUpdating) {
-			state = Status.Obsolete;
-
-			// nodes that are updating are allowed to continue unless a parent
-			// is updating
-			// the other option here is that the parent is waiting, which means
-			// we wait as well
-		} else if ((state == Status.UpToDate || state == Status.NeedsUpdating)
-				&& getStatus() == Status.Updating) {
-			state = Status.Updating;
-
-			// the parent state is ok, check children
-		} else if (this instanceof ParentNode && state == Status.UpToDate) {
-			// determine the state of children
-			ParentNode pn = (ParentNode) this;
-			VersionStates vStates = new VersionStates();
-			
-			for (ChildNode child : pn.getChildNodes()) {
-				child.checkVersionState(getVersion(), projectVersion, vStates);
-			}
-			
-			// out of date if there are children out of date
-			if (vStates.childOutOfDate) {
-				state = Status.InProgress;
-
-				// requirements have the completed status
-			} else if (this instanceof Requirement) {
-				if (vStates.zombieNode) {
-					state = Status.Planned;
-				} else if (vStates.hasValidTests) {
-					if (vStates.testsRegressed) {
-						state = Status.CompleteRV;
-					} else {
-						state = Status.CompleteV;
-					}
-				} else {
-					state = Status.CompleteNV;
-				}
-			}
-		}
-
-		return state;
-	}
-
+	
+	/**
+	 * This method will check the relative status of this dependency with its parents.
+	 * For example if a parent is a higher version, then this dependency needs to be updated. 
+	 * @return the status relative to the parents.
+	 */
 	protected Status checkParentVersions() {
 		Status state = Status.UpToDate;
 		for (ParentNode p : getParentNodes()) {
@@ -116,5 +72,15 @@ public abstract class Dependency implements Serializable, ChildNode {
 		}
 
 		return state;
+	}
+	
+	/**
+	 * Method to check if the state is updating and that is valid based off parent states. 
+	 * @param state The state of the parents based off the checkParentVersions() method
+	 * @return true if updating is a valid state for this dependency
+	 */
+	protected boolean isValidUpdatingState(Status state) {
+		return (state == Status.UpToDate || state == Status.NeedsUpdating)
+				&& getStatus() == Status.Updating;
 	}
 }
