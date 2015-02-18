@@ -1,5 +1,8 @@
 package org.au.requisitor.common.dependencies;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.au.requisitor.common.ChildNode;
 import org.au.requisitor.common.ChildType;
 import org.au.requisitor.common.Dependency;
@@ -7,6 +10,7 @@ import org.au.requisitor.common.ParentNode;
 import org.au.requisitor.common.Status;
 import org.au.requisitor.common.Version;
 import org.au.requisitor.common.VersionStates;
+import org.au.requisitor.common.action.ActionType;
 import org.au.requisitor.common.requirements.Requirement;
 
 public class TestRun extends Dependency {
@@ -47,6 +51,11 @@ public class TestRun extends Dependency {
 		} 
 		
 		return state;
+	}
+
+	@Override
+	public List<ActionType> getAvailableActions() {
+		return Collections.emptyList();
 	}
 
 }

@@ -1,6 +1,7 @@
 package org.au.requisitor.common.dependencies;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.au.requisitor.common.ChildNode;
 import org.au.requisitor.common.ChildType;
@@ -9,6 +10,8 @@ import org.au.requisitor.common.ParentNode;
 import org.au.requisitor.common.Status;
 import org.au.requisitor.common.Version;
 import org.au.requisitor.common.VersionStates;
+import org.au.requisitor.common.action.ActionMapBuilder;
+import org.au.requisitor.common.action.ActionType;
 import org.au.requisitor.common.requirements.Requirement;
 
 /**
@@ -42,6 +45,26 @@ public class Development extends Dependency implements Serializable {
 		}
 
 		return state;
+	}
+
+	@Override
+	public List<ActionType> getAvailableActions() {
+		return availableActions.getActions(getStatus());
+	}
+
+	static ActionMapBuilder availableActions;
+	static {
+		availableActions = new ActionMapBuilder();
+		availableActions
+			.addStatus(Status.NeedsUpdating)
+				.addActions(ActionType.Update, ActionType.NoUpdateRequired)
+			.addStatus(Status.Updating)
+				.addActions(ActionType.CompleteUpdate, ActionType.CancelUpdate)
+			.addStatus(Status.NeedsDevelopment)
+				.addActions(ActionType.StartDevelopment, ActionType.RequestUpdate)
+			.addStatus(Status.UnderDevelopment)
+				.addActions(ActionType.CompleteDevelopment, ActionType.RequestUpdate, ActionType.CancelDevelopment)
+			;
 	}
 
 }

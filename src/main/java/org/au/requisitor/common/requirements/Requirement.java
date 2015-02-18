@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.au.requisitor.common.ChildNode;
 import org.au.requisitor.common.ChildType;
@@ -13,9 +14,10 @@ import org.au.requisitor.common.Project;
 import org.au.requisitor.common.Status;
 import org.au.requisitor.common.Version;
 import org.au.requisitor.common.VersionStates;
+import org.au.requisitor.common.action.ActionMapBuilder;
+import org.au.requisitor.common.action.ActionType;
 import org.au.requisitor.common.dependencies.Development;
 import org.au.requisitor.common.dependencies.Test;
-import org.au.requisitor.common.dependencies.TestRun;
 
 
 /**
@@ -203,4 +205,29 @@ public class Requirement extends Dependency implements ParentNode {
 		return state;
 	}
 
+	@Override
+	public List<ActionType> getAvailableActions() {
+		return availableActions.getActions(getStatus());
+	}
+
+	static ActionMapBuilder availableActions;
+	static {
+		availableActions = new ActionMapBuilder();
+		availableActions
+			.addStatus(Status.Planned)
+				.addActions(ActionType.Update)
+			.addStatus(Status.NeedsUpdating)
+				.addActions(ActionType.Update, ActionType.NoUpdateRequired, ActionType.CancelUpdate)
+			.addStatus(Status.Updating)
+				.addActions(ActionType.CompleteUpdate, ActionType.CancelUpdate)
+			.addStatus(Status.InProgress)
+				.addActions(ActionType.RequestUpdate)
+			.addStatus(Status.CompleteNV)
+				.addActions(ActionType.RequestUpdate)
+			.addStatus(Status.CompleteV)
+				.addActions(ActionType.RequestUpdate)
+			.addStatus(Status.CompleteRV)
+				.addActions(ActionType.RequestUpdate)
+			;
+	}
 }

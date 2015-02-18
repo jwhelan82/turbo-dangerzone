@@ -3,6 +3,7 @@ package org.au.requisitor.common.dependencies;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.au.requisitor.common.ChildNode;
 import org.au.requisitor.common.ChildType;
@@ -11,6 +12,8 @@ import org.au.requisitor.common.ParentNode;
 import org.au.requisitor.common.Status;
 import org.au.requisitor.common.Version;
 import org.au.requisitor.common.VersionStates;
+import org.au.requisitor.common.action.ActionMapBuilder;
+import org.au.requisitor.common.action.ActionType;
 import org.au.requisitor.common.requirements.Requirement;
 
 /**
@@ -71,6 +74,28 @@ public class Test extends Dependency implements Serializable, ParentNode {
 		}
 
 		return state;
+	}
+
+	@Override
+	public List<ActionType> getAvailableActions() {
+		return availableActions.getActions(getStatus());
+	}
+
+	static ActionMapBuilder availableActions;
+	static {
+		availableActions = new ActionMapBuilder();
+		availableActions
+			.addStatus(Status.NeedsUpdating)
+				.addActions(ActionType.Update, ActionType.NoUpdateRequired)
+			.addStatus(Status.Updating)
+				.addActions(ActionType.CompleteUpdate, ActionType.CancelUpdate)
+			.addStatus(Status.WaitingForDevelopment)
+				.addActions(ActionType.RequestUpdate)
+			.addStatus(Status.ReadyForTesting)
+				.addActions(ActionType.StartTesting, ActionType.RequestUpdate)
+			.addStatus(Status.Testing)
+				.addActions(ActionType.PassTesting, ActionType.FailTesting, ActionType.RequestUpdate, ActionType.CancelTesting)
+			;
 	}
 
 }

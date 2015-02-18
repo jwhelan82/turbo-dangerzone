@@ -3,9 +3,9 @@ package org.au.requisitor.common;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
-import org.au.requisitor.common.dependencies.TestRun;
-import org.au.requisitor.common.requirements.Requirement;
+import org.au.requisitor.common.action.ActionType;
 
 /**
  * Represents a dependency.

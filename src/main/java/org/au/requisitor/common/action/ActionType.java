@@ -1,17 +1,24 @@
 package org.au.requisitor.common.action;
 
 public enum ActionType {
-    RequestUpdate,
-    Update,
-    CancelUpdate,
-    CompleteUpdate,
+    RequestUpdate ("Request Update"),
+    Update ("Update"),
+    CancelUpdate ("Cancel Update"),
+    NoUpdateRequired ("No Update Required"),
+    CompleteUpdate ("Complete Update"),
     
-    StartDevelopment,
-    CompleteDevelopment,
-    CancelDevelopment,
+    StartDevelopment ("Begin Development"),
+    CompleteDevelopment ("Complete Development"),
+    CancelDevelopment ("Cancel Development"),
     
-    StartTesting,
-    PassTesting,
-    FailTesting,
-    CancelTesting,
+    StartTesting ("Begin Testing"),
+    PassTesting ("Pass"),
+    FailTesting ("Fail"),
+    CancelTesting ("Cancel Testing");
+    
+    String defaultDisplayTest;
+    
+    private ActionType(String displayText) {
+    	this.defaultDisplayTest = displayText;
+    }
 }
