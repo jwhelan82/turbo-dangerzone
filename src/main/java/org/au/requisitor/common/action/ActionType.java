@@ -1,6 +1,20 @@
 package org.au.requisitor.common.action;
 
 public enum ActionType {
+    // Versioned dependency actions
+    Incorporate ("Incorporate"),
+    Reject("Reject"),
+    MarkNotRequired("Mark Not Required"),
+    
+    // instanced dependency actions
+    Pass ("Pass"),
+    Fail ("Fail"),
+    
+    // singularity actions
+    Cancel("Cancel"),
+    
+    
+    // Obsolete actions
     RequestUpdate ("Request Update"),
     Update ("Update"),
     CancelUpdate ("Cancel Update"),
@@ -12,8 +26,6 @@ public enum ActionType {
     CancelDevelopment ("Cancel Development"),
     
     StartTesting ("Begin Testing"),
-    PassTesting ("Pass"),
-    FailTesting ("Fail"),
     CancelTesting ("Cancel Testing");
     
     String defaultDisplayTest;
